@@ -1,0 +1,102 @@
+import { useEffect, useState } from "react";
+import "./styles.css";
+
+export default function App() {
+  const [counter, setCounter] = useState(0);
+  const [isActive, setIsActive] = useState(false);
+  const handleClick = (val) => {
+    if (val === "start") {
+      setIsActive(true);
+    } else {
+      setIsActive(false);
+    }
+  };
+
+  useEffect(() => {
+    let setIntervalValue = null;
+    if (isActive) {
+      setIntervalValue = setInterval(() => {
+        setCounter((prev) => {
+          if (prev >= 20) {
+            clearInterval(setIntervalValue);
+            return prev;
+          }
+          return prev + 1;
+        });
+      }, 1000);
+    } else if (!isActive) {
+      clearInterval(setIntervalValue);
+    }
+    return () => clearInterval(setIntervalValue);
+  }, [isActive, counter]);
+  return (
+    <div className="App">
+      <h1>Counter : {counter}</h1>
+      <button onClick={() => handleClick("start")}>Start </button>
+      <button onClick={() => handleClick("stop")}>Stop </button>
+    </div>
+  );
+}
+
+
+2:??????????????????????????/
+import { useState } from "react";
+import "./styles.css";
+
+export default function App() {
+  const [inputText, setInputText] = useState("");
+  const [items, setItems] = useState([]);
+
+  const handleInputChange = (event) => {
+    setInputText(event.target.value);
+  };
+
+  const toggleItemCompletion = (index) => {
+    const newItems = items.map((item, ind) => {
+      if (ind === index) {
+        return { ...item, completed: !item.completed };
+      }
+      return item;
+    });
+    setItems(newItems);
+  };
+
+  const handleAdd = () => {
+    if (inputText) {
+      setItems([...items, { text: inputText, completed: false }]);
+      setInputText("");
+    }
+  };
+  return (
+    <div className="App">
+      <input type="text" value={inputText} onChange={handleInputChange} />
+      <button onClick={handleAdd}>Add</button>
+      <ul>
+        {items.map((item, index) => (
+          <li
+            key={index}
+            style={{ textDecoration: item.completed ? "line-through" : "none" }}
+            onClick={() => toggleItemCompletion(index)}
+          >
+            {item.text}
+          </li>
+        ))}
+      </ul>
+      <div>Total :{items.length}</div>
+      <div>
+        Completed items :{items.filter((item) => item.completed).length}
+      </div>
+    </div>
+  );
+}
+
+// 1> create a ToDo application in which
+// 	1> user can enter text and add to the list
+// 	2> list should be displayed just below text field
+// 	3> user click on the list items & list item should get striked out
+// 	4> on click of striked list item it should show as normal text
+// 	5> should show total list count & striked list count
+// {
+//   text:"helll",
+//   completed: false
+// }
