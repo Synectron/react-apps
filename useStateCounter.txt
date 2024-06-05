@@ -1,5 +1,10 @@
-import { useEffect, useState } from "react";
-import "./styles.css";
+
+//1> create a counter button start & stop
+//	1> on click on start button counter should start counting 
+//	2> if counter value <20 counter should stop counting
+//	3> on click on stop button counter should stop counting
+//import { useEffect, useState } from "react";
+//import "./styles.css";
 
 export default function App() {
   const [counter, setCounter] = useState(0);
